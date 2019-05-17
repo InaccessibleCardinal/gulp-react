@@ -1,4 +1,5 @@
 var React = require('react');
+var setInheritance = require('../setInheritance');
 var User = require('./User');
 var fetch = require('../fetch');
 var h = React.createElement;
@@ -13,7 +14,7 @@ function Users(props) {
     };
     this.selectUser = this.selectUser.bind(this);
 }
-Users.prototype = Object.create(Component.prototype);
+setInheritance(Users, Component);
 Users.prototype.componentDidMount = function() {
     var u = 'http://jsonplaceholder.typicode.com/users';
     var _this = this;
@@ -28,14 +29,23 @@ Users.prototype.componentDidMount = function() {
 };
 Users.prototype.selectUser = function(e) {
     var id = e.target.id;
-    console.log('id: ', id);
+    this.setState({selectedUser: parseInt(id, 10)});
 };
 Users.prototype.render = function() {
     var users = this.state.users;
+    var selectedUser = this.state.selectedUser;
     var _this = this;
     if (users.length > 0) {
         var usersMarkup = users.map(function(user) {
-            return h(User, {user: user, clickHandler: _this.selectUser, key: user.id});
+            return h(
+                User, 
+                {
+                    user: user, 
+                    clickHandler: _this.selectUser, 
+                    isSelected: selectedUser === user.id, 
+                    key: user.id
+                }
+            );
         });
         return h('div', null, usersMarkup);
     } else {

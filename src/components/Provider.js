@@ -1,12 +1,9 @@
 var React = require('react');
+var setInheritance = require('../setInheritance');
 var createStore = require('../store/createStore');
 var h = React.createElement;
 var Component = React.Component;
 
-function setInheritance(subClass, superClass) {
-    subClass.prototype = Object.create(superClass.prototype);
-    subClass.prototype.constructor = subClass;
-}
 //sort of
 function Provider(props) {
     Component.call(this);

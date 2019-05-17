@@ -1,4 +1,5 @@
 var React = require('react');
+var setInheritance = require('../setInheritance');
 var fetch = require('../fetch');
 var h = React.createElement;
 var Component = React.Component;
@@ -9,8 +10,7 @@ function WithService(url, dataName, WrappedComponent) {
         Component.call(this);
         this.state = {data: null};
     }
-    Wrapper.prototype = Object.create(Component.prototype);
-    Wrapper.prototype.constructor = Wrapper;
+    setInheritance(Wrapper, Component);
     Wrapper.prototype.componentDidMount = function() {
         var _this = this;
         fetch(url)
