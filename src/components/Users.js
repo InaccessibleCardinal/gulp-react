@@ -1,4 +1,5 @@
 var React = require('react');
+var User = require('./User');
 var fetch = require('../fetch');
 var h = React.createElement;
 var Component = React.Component;
@@ -7,8 +8,10 @@ function Users(props) {
     Component.call(this);
     this.state = {
         users: [],
-        error: null
+        error: null,
+        selectedUser: null
     };
+    this.selectUser = this.selectUser.bind(this);
 }
 Users.prototype = Object.create(Component.prototype);
 Users.prototype.componentDidMount = function() {
@@ -23,28 +26,21 @@ Users.prototype.componentDidMount = function() {
         _this.setState({error: e});
     });
 };
+Users.prototype.selectUser = function(e) {
+    var id = e.target.id;
+    console.log('id: ', id);
+};
 Users.prototype.render = function() {
     var users = this.state.users;
+    var _this = this;
     if (users.length > 0) {
         var usersMarkup = users.map(function(user) {
-            return h(User, {user: user, key: user.id});
+            return h(User, {user: user, clickHandler: _this.selectUser, key: user.id});
         });
         return h('div', null, usersMarkup);
     } else {
         return h('div', null, 'loading...');
     }
-}
-
-function User(props) {
-    var user = props.user;
-    var $name = h('h1', {key: 'name'}, user.name), 
-    $email = h('p', {key: 'email'}, user.email), 
-    $phone = h('p', {key: 'phone'}, user.phone);
-    return h(
-        'div',
-        {style: {border: '1px solid', padding: '10px'}},
-        [$name, $email, $phone]
-    );
-}
+};
 
 module.exports = Users;

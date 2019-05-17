@@ -1,5 +1,5 @@
 module.exports = function(reducer) {
-    var state, listeners;
+    var state, listeners = [];
     function getState() {
         return state;
     }
@@ -11,10 +11,10 @@ module.exports = function(reducer) {
             throw new Error('An action must have a type.');
         }
         var l = listeners.length;
-        state = reducer(action, state);
-        for (var i = 0; i < length; ++i) {
-            listeners[i]();
-        }
+        state = reducer(state, action);
+        listeners.forEach(function(f) {
+            f();
+        });
     }
 
     dispatch({type: '@@RANDOM'});
