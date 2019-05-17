@@ -1,0 +1,19 @@
+{
+  "name": "gulp-react",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gulp": "3.9.1",
+    "gulp-browserify": "^0.5.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "reactify": "^1.1.1"
+  }
+}
